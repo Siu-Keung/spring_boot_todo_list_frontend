@@ -1,4 +1,4 @@
-import filterHandlers from '../tools/FilterHandlers';
+import filterHandlers from '../pc/tools/FilterHandlers';
 import axios from 'axios';
 
 const DataApi = {
@@ -11,7 +11,7 @@ const DataApi = {
         console.log(newItemContent)
         axios({
             method: 'post',
-            url: "http://localhost:1003/api-a/todoItems",
+            url: "http://localhost:1003/todoListService/todoItems",
             data: {content: newItemContent}
         }).then(
             response => {
@@ -28,18 +28,19 @@ const DataApi = {
         if(checked)
             newStatus = '未完成'
         axios({
-            url: `http://localhost:1003/api-a/todoItems`,
+            url: `http://localhost:1003/todoListService/todoItems`,
             method: 'put',
             data: {id: id, content: content, type: newStatus}
         }).then(response => {
-            if(response.status == 204)
+            console.log(response.status)
+            if(response.status == 200)
                 callback();
         });
     },
 
     updateItemContent(id, newContent, callback){
         axios({
-            url: `http://localhost:1003/api-a/todoItems`,
+            url: `http://localhost:1003/todoListService/todoItems`,
             method: 'patch',
             data: {id: id, content: newContent},
         }).then(response => {
@@ -49,7 +50,7 @@ const DataApi = {
     },
 
     getItemsByFilter(filterTitle, callback){
-        axios.get(`http://localhost:1003/api-a/todoItems?filter=${filterTitle}`).then(response =>{
+        axios.get(`http://localhost:1003/todoListService/todoItems?filter=${filterTitle}`).then(response =>{
             let items = response.data;
             items.forEach(item => {
                item.display = true;
@@ -62,7 +63,7 @@ const DataApi = {
 
     deleteItemById(id, callback){
         axios({
-            url: `http://localhost:1003/api-a/todoItems`,
+            url: `http://localhost:1003/todoListService/todoItems`,
             method: 'delete',
             data: {id: id},
         })

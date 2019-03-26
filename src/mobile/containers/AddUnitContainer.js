@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {addItem} from "../actions/actions";
 import AddUnit from '../components/AddUnit';
-import dataApi from '../api/DataApi';
+import dataApi from '../../api/DataApi';
 
 
 const mapStateToProps = (state, ownProps) =>{

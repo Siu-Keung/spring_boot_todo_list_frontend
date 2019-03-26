@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {handleFilterChanged} from "../actions/actions";
 import FilterUnit from '../components/FilterUnit'
-import dataApi from "../api/DataApi";
+import dataApi from "../../api/DataApi";
 
 const mapStateToProps = (state, ownProps) =>{
     return {allFilters: state.allFilters};

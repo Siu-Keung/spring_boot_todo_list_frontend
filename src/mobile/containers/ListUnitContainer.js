@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {handleCheckBoxClicked, handleSpanClicked, handleEnterKeyUp} from "../actions/actions";
 import ListUnit from '../components/ListUnit';
-import dataApi from '../api/DataApi';
+import dataApi from '../../api/DataApi';
 import filterHandlers from '../tools/FilterHandlers';
 
 const mapStateToProps = (state, ownProps) => {
@@ -15,6 +15,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onCheckBoxClicked: (item) => {
             dataApi.toggleCheckedStatus(item.id, item.content, item.checked, () => {
+                console.log('fdsf')
                 dispatch({type: 'ITEM_CHECKED', value: item.id})
             });
         },

@@ -1,0 +1,30 @@
+ol {
+    padding-left: 20px;
+}
+
+ol li {
+    padding: 5px;color:#000;
+}
+
+ol li:nth-child(even){
+    background: #f4ecec;
+}
+input[type=checkbox].done-todo {
+
+    margin: 5px 5px 2px 0;
+}
+
+.checked {
+    color: #999;
+    text-decoration: line-through;
+}
+input{
+    padding: 4px 15px 4px 0;
+
+}
+
+li:hover{
+    cursor: pointer;
+}
+
+
