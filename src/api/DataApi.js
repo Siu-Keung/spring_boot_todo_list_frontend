@@ -61,6 +61,13 @@ const DataApi = {
         });
     },
 
+    getItemsById(id, callback){
+        axios.get(`http://localhost:1003/todoListService/todoItems/${id}`).then(response =>{
+            let item = response.data[0];
+            callback(item);
+        });
+    },
+
     deleteItemById(id, callback){
         axios({
             url: `http://localhost:1003/todoListService/todoItems`,
