@@ -165,7 +165,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch({type: "TOGGLE_ITEM_TYPE", id: itemId});
         },
         onConfirmButtonClicked: (item) => {
-            dataApi.toggleCheckedStatus(item.id, item.content, item.type === "已完成"? true: false, () => {
+            dataApi.toggleCheckedStatus(item.id, item.content, item.type === "已完成"? false: true, () => {
                 dispatch({type: "UPDATE_ITEM", newItem: item})
             })
         }
