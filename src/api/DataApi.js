@@ -38,6 +38,18 @@ const DataApi = {
         });
     },
 
+    updateItem(item, callback){
+        axios({
+            url: `http://localhost:1003/todoListService/todoItems`,
+            method: 'put',
+            data: item
+        }).then(response => {
+            console.log(response.status)
+            if(response.status == 200)
+                callback(item);
+        });
+    },
+
     updateItemContent(id, newContent, callback){
         axios({
             url: `http://localhost:1003/todoListService/todoItems`,

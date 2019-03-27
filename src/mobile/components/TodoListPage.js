@@ -31,7 +31,26 @@ class TodoListPage extends Component {
     }
 
     generateListPage() {
-        let itemArrays = this.props.items.filter(elem => elem.type === "未完成").map(elem => {
+        let notFinishedItems = this.props.items.filter(elem => elem.type === "未完成").map(elem => {
+            return (
+                <Item arrow="horizontal" multipleLine
+                      onClick={() => {
+                          this.props.onItemClicked(elem.id);
+                      }}>
+                    <Card full>
+                        <Card.Header
+                            title={elem.created}
+                            thumb="https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
+                        />
+                        <Card.Body>
+                            <div>{elem.content}</div>
+                        </Card.Body>
+                    </Card>
+                </Item>
+            )
+        })
+
+        let finishedItems = this.props.items.filter(elem => elem.type === "已完成").map(elem => {
             return (
                 <Item arrow="horizontal" multipleLine
                       onClick={() => {
@@ -69,24 +88,10 @@ class TodoListPage extends Component {
                 }}
             >
                 <List renderHeader={() => '待完成列表'} className="my-list">
-                    {itemArrays}
+                    {notFinishedItems}
                 </List>
                 <List renderHeader={() => '已完成列表'} className="my-list">
-                    <Item arrow="horizontal" multipleLine onClick={() => {
-                    }}>
-                        <Card full>
-                            <Card.Header
-                                title="This is title"
-                                thumb="https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
-                                extra={<span>this is extra</span>}
-                            />
-                            <Card.Body>
-                                <div>This is content of `Card`</div>
-                            </Card.Body>
-                            <Card.Footer content="footer content" extra={<div>extra footer content</div>}/>
-                        </Card>
-                    </Item>
-
+                    {finishedItems}
                 </List>
             </TabBar.Item>)
         return listPage;
@@ -165,7 +170,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch({type: "TOGGLE_ITEM_TYPE", id: itemId});
         },
         onConfirmButtonClicked: (item) => {
-            dataApi.toggleCheckedStatus(item.id, item.content, item.type === "已完成"? false: true, () => {
+            dataApi.updateItem(item, () => {
                 dispatch({type: "UPDATE_ITEM", newItem: item})
             })
         }
