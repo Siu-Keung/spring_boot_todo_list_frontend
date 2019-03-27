@@ -101,11 +101,15 @@ class TodoListPage extends Component {
         return (
             <div>
                 <List renderHeader={() => '创建日期：'}>
-                    
+
                 </List>
                 <List renderHeader={() => '类型：'}>
                     {data.map(i => (
-                        <RadioItem key={i.label} checked={this.props.item.type === i.value}>
+                        <RadioItem
+                            key={i.label}
+                            checked={this.props.item.type === i.label}
+                            onChange={() => {this.props.toggleItemType(this.props.item.id)}}
+                        >
                             {i.label}
                         </RadioItem>
                     ))}
@@ -116,13 +120,15 @@ class TodoListPage extends Component {
                         rows={5}
                         count={100}
                         defaultValue={this.props.item.content}
-                        onChange={val => {this.inputContent = val}}
+                        onChange={val => {
+                            this.inputContent = val
+                        }}
                     />
                 </List>
 
                 <List renderHeader={() => '操作 '}>
-                    <Button type="primary" onClick={() => console.log(this.inputContent)}>提交</Button><WhiteSpace/>
-                    <Button type="primary" onClick={() => console.log(this.inputContent)}>取消</Button><WhiteSpace/>
+                    <Button type="primary" onClick={() => this.props.onConfirmButtonClicked(this.props.item)}>提交</Button><WhiteSpace/>
+                    <Button type="warning" onClick={() => this.props.forwardToListPage()}>取消</Button><WhiteSpace/>
 
                 </List>
             </div>
@@ -150,6 +156,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                     type: "ON_ITEM_CLICKED",
                     item: item,
                 })
+            })
+        },
+        forwardToListPage: () => {
+            dispatch({type: "FORWARD_TO_LIST_PAGE"});
+        },
+        toggleItemType: (itemId) => {
+            dispatch({type: "TOGGLE_ITEM_TYPE", id: itemId});
+        },
+        onConfirmButtonClicked: (item) => {
+            dataApi.toggleCheckedStatus(item.id, item.content, item.type === "已完成"? true: false, () => {
+                dispatch({type: "UPDATE_ITEM", newItem: item})
             })
         }
     }
