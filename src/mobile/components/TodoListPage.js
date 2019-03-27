@@ -106,14 +106,16 @@ class TodoListPage extends Component {
         return (
             <div>
                 <List renderHeader={() => '创建日期：'}>
-
+                    <Item>{this.props.item.created}</Item>
                 </List>
                 <List renderHeader={() => '类型：'}>
                     {data.map(i => (
                         <RadioItem
                             key={i.label}
                             checked={this.props.item.type === i.label}
-                            onChange={() => {this.props.toggleItemType(this.props.item.id)}}
+                            onChange={() => {
+                                this.props.toggleItemType(this.props.item.id)
+                            }}
                         >
                             {i.label}
                         </RadioItem>
@@ -132,7 +134,10 @@ class TodoListPage extends Component {
                 </List>
 
                 <List renderHeader={() => '操作 '}>
-                    <Button type="primary" onClick={() => this.props.onConfirmButtonClicked(this.props.item)}>提交</Button><WhiteSpace/>
+                    <Button type="primary" onClick={() => {
+                        this.props.item.content = this.inputContent;
+                        this.props.onConfirmButtonClicked(this.props.item)
+                    }}>提交</Button><WhiteSpace/>
                     <Button type="warning" onClick={() => this.props.forwardToListPage()}>取消</Button><WhiteSpace/>
 
                 </List>

@@ -16,7 +16,6 @@ class MobileApp extends Component {
     }
 
     render() {
-        this.state = {'selectedTab': '抢单'}
 
         return (
             <div>
@@ -29,7 +28,28 @@ class MobileApp extends Component {
                         hidden={false}
                         prerenderingSiblingsNumber={0}
                     >
-                        <TodoListPage/>
+
+                        <TabBar.Item
+                            icon={
+                                <div style={{
+                                    width: '22px',
+                                    height: '22px',
+                                    background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat'
+                                }}
+                                />
+                            }
+                            selectedIcon={{uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg'}}
+                            title="Todo"
+                            key="my"
+                            selected={this.props.activeTab === 'todoList'}
+                            onPress={() => {
+                                this.setState({
+                                    selectedTab: 'todoList',
+                                });
+                            }}
+                        >
+                            <TodoListPage/>
+                        </TabBar.Item>
 
                         <TabBar.Item
                             icon={
@@ -43,7 +63,7 @@ class MobileApp extends Component {
                             selectedIcon={{uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg'}}
                             title="个人账户"
                             key="my"
-                            selected={this.state.selectedTab === 'account'}
+                            selected={this.props.activeTab === 'account'}
                             onPress={() => {
                                 this.setState({
                                     selectedTab: 'account',
@@ -58,15 +78,16 @@ class MobileApp extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) =>{
+const mapStateToProps = (state, ownProps) => {
     return state;
 }
 
-const mapDispatchToProps = (dispatch, ownProps) =>{
+const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onAddButtonClicked: (newItemContent) => {
             dataApi.addItem(newItemContent, (newItem) => {
-                dispatch({type: 'ADD_ITEM', value: newItem})});
+                dispatch({type: 'ADD_ITEM', value: newItem})
+            });
         },
     }
 }
